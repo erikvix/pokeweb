@@ -1,14 +1,109 @@
 "use client";
-
+import {
+  Zap,
+  Droplet,
+  Flame,
+  Leaf,
+  Skull,
+  Feather,
+  Snowflake,
+  Bug,
+  Mountain,
+  Shield,
+  Grape,
+  Sword,
+  Bolt,
+  Ghost,
+  Star,
+  Sparkles,
+  Target,
+  Eye,
+} from "lucide-react";
+import { FaHandFist as Fist } from "react-icons/fa6";
+import { GiSeaDragon, GiSpikedDragonHead } from "react-icons/gi";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import Image from "next/image";
 import { useState } from "react";
-import { typeIcons, PokemonType, Pokemon } from "../types/TypeBadge";
-import { Progress } from "@/components/ui/progress";
+import { PokemonType, Pokemon } from "../types/TypeBadge";
 import { ChartComponent } from "@/components/custom/RadarChart";
+
+const typeIcons: Record<PokemonType, { color: string; icon: JSX.Element }> = {
+  electric: {
+    color: "bg-yellow-400",
+    icon: <Zap className="h-4 w-4" />,
+  },
+  water: {
+    color: "bg-blue-500",
+    icon: <Droplet className="h-4 w-4" />,
+  },
+  fire: {
+    color: "bg-orange-500",
+    icon: <Flame className="h-4 w-4" />,
+  },
+  grass: {
+    color: "bg-green-500",
+    icon: <Leaf className="h-4 w-4" />,
+  },
+  poison: {
+    color: "bg-purple-600",
+    icon: <Skull className="h-4 w-4" />,
+  },
+  flying: {
+    color: "bg-indigo-400",
+    icon: <Feather className="h-4 w-4" />,
+  },
+  ground: {
+    color: "bg-yellow-600",
+    icon: <Mountain className="h-4 w-4" />,
+  },
+  rock: {
+    color: "bg-yellow-700",
+    icon: <Shield className="h-4 w-4" />,
+  },
+  bug: {
+    color: "bg-lime-600",
+    icon: <Bug className="h-4 w-4" />,
+  },
+  ghost: {
+    color: "bg-purple-800",
+    icon: <Ghost className="h-4 w-4" />,
+  },
+  steel: {
+    color: "bg-gray-400",
+    icon: <Bolt className="h-4 w-4 " />,
+  },
+  fairy: {
+    color: "bg-pink-400",
+    icon: <Star className="h-4 w-4" />,
+  },
+  fighting: {
+    color: "bg-red-600",
+    icon: <Fist className="h-4 w-4" />,
+  },
+  psychic: {
+    color: "bg-pink-600",
+    icon: <Eye className="h-4 w-4" />,
+  },
+  ice: {
+    color: "bg-cyan-300",
+    icon: <Snowflake className="h-4 w-4" />,
+  },
+  dark: {
+    color: "bg-gray-800",
+    icon: <Target className="h-4 w-4" />,
+  },
+  dragon: {
+    color: "bg-purple-600",
+    icon: <GiSpikedDragonHead className="h-4 w-4" />,
+  },
+  normal: {
+    color: "bg-gray-500",
+    icon: <Sparkles className="h-4 w-4" />,
+  },
+};
 
 const renderType = (types: Array<{ type: { name: PokemonType } }>) => {
   return (
@@ -18,7 +113,7 @@ const renderType = (types: Array<{ type: { name: PokemonType } }>) => {
 
         return (
           <Badge
-            className={`space-x-1 hover:bg-${typeIcons[typeString].color}/90 text-foreground bg-${typeIcons[typeString].color}`}
+            className={`space-x-1 hover:${typeIcons[typeString].color}/90 text-foreground ${typeIcons[typeString].color}`}
             key={index}
           >
             {getPokemonType(typeString) && typeIcons[typeString].icon}
@@ -93,15 +188,15 @@ export default function Home() {
               <div className="grid grid-cols-2 px-4 gap-2">
                 <div>
                   <p className="text-gray-400">Height</p>
-                  <p>2m</p>
+                  <p>{pokemon.height}m</p>
                 </div>
                 <div>
                   <p className="text-gray-400">Weight</p>
-                  <p>20kg</p>
+                  <p>{pokemon.weight}g</p>
                 </div>
               </div>
               <div>
-                <ChartComponent />
+                <ChartComponent stats={pokemon.stats} />
               </div>
             </CardContent>
           </Card>

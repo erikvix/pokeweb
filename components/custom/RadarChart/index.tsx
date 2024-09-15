@@ -26,14 +26,9 @@ import {
 
 export const description = "A radar chart";
 
-const stats = [
-  { name: "HP", value: 40, fullMark: 100 },
-  { name: "Attack", value: 50, fullMark: 100 },
-  { name: "Defense", value: 45, fullMark: 100 },
-  { name: "Sp. Atk", value: 70, fullMark: 100 },
-  { name: "Sp. Def", value: 45, fullMark: 100 },
-  { name: "Speed", value: 70, fullMark: 100 },
-];
+interface statsProps {
+  stats: Array<{ base_stat: number; stat: { name: string } }>;
+}
 
 const chartConfig = {
   desktop: {
@@ -42,20 +37,30 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-export function ChartComponent() {
+export function ChartComponent({ stats }: statsProps) {
+  const data = stats.map((item) => ({
+    stat: item.stat.name,
+    value: item.base_stat,
+  }));
   return (
     <Card className="border-none mt-4">
       <CardHeader className="items-center pb-4">
         <CardTitle className="text-xl">Stats</CardTitle>
       </CardHeader>
-      <CardContent className="pb-0">
+      <CardContent className="pb-0 flex items-center justify-center">
         <ChartContainer
           config={chartConfig}
-          className="mx-auto aspect-square min-h-[300px] max-h-[250px]"
+          className="mx-auto aspect-square min-w-[500px] max-h-[250px]"
         >
-          <RadarChart data={stats}>
+          <RadarChart
+            outerRadius={90}
+            className="p-2"
+            width={730}
+            height={250}
+            data={data}
+          >
             <PolarAngleAxis
-              dataKey="name"
+              dataKey="stat.name"
               tick={({ x, y, textAnchor, value, index, ...props }) => {
                 const data = stats[index];
                 return (
@@ -68,14 +73,14 @@ export function ChartComponent() {
                     {...props}
                     className="fill-muted-foreground"
                   >
-                    <tspan>{data.name}</tspan>
+                    <tspan className="capitalize ">{data.stat.name}</tspan>
                     <tspan
                       x={x}
                       dy={"1rem"}
                       fontSize={12}
                       className="fill-muted-foreground"
                     >
-                      {data.value}
+                      {data.base_stat}
                     </tspan>
                   </text>
                 );
@@ -83,7 +88,7 @@ export function ChartComponent() {
             />
             <PolarRadiusAxis
               angle={30}
-              domain={[0, 100]}
+              domain={[0, 150]}
               tick={false}
               axisLine={false}
             />
