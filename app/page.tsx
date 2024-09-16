@@ -10,8 +10,6 @@ import {
   Bug,
   Mountain,
   Shield,
-  Grape,
-  Sword,
   Bolt,
   Ghost,
   Star,
@@ -20,7 +18,7 @@ import {
   Eye,
 } from "lucide-react";
 import { FaHandFist as Fist } from "react-icons/fa6";
-import { GiSeaDragon, GiSpikedDragonHead } from "react-icons/gi";
+import { GiSpikedDragonHead } from "react-icons/gi";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
