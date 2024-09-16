@@ -48,7 +48,7 @@ export function ChartComponent({ stats }: statsProps) {
           >
             <PolarAngleAxis
               dataKey="stat.name"
-              tick={({ x, y, textAnchor, value, index, ...props }) => {
+              tick={({ x, y, textAnchor, index, ...props }) => {
                 const data = stats[index];
                 return (
                   <text
